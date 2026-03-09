@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusForge - Ultimate Website Creation Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #9ca3af;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        /* Login Screen */
+        #login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .login-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            animation: slideUp 0.5s ease;
+        }
+
+        .login-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-container p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Main Dashboard */
+        #main-dashboard {
+            display: none;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-title p {
+            color: var(--gray);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .template-preview {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .template-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .template-info {
+            padding: 1.5rem;
+        }
+
+        .template-info h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .template-info p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .template-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #f3f4f6;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: var(--dark);
+        }
+
+        /* Website Builder */
+        #builder-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 1000;
+        }
+
+        .builder-header {
+            background: var(--dark);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .builder-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .builder-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .builder-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .builder-btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .builder-btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .builder-container {
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+
+        .builder-sidebar {
+            width: 300px;
+            background: #f9fafb;
+            border-right: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .builder-canvas {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background: #f3f4f6;
+        }
+
+        .website-preview {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-height: 100%;
+            padding: 2rem;
+        }
+
+        .element-list {
+            list-style: none;
+        }
+
+        .element-item {
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: move;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .element-item:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 350px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1001;
+        }
+
+        .ai-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .ai-message {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .ai-message.user {
+            background: var(--primary);
+            color: white;
+            margin-left: auto;
+        }
+
+        .ai-message.assistant {
+            background: #f3f4f6;
+            color: var(--dark);
+        }
+
+        .ai-input {
+            padding: 1rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .ai-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .ai-input input:focus {
+            border-color: var(--primary);
+        }
+
+        .ai-input button {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .builder-container {
+                flex-direction: column;
+            }
+
+            .builder-sidebar {
+                width: 100%;
+                height: 200px;
+            }
+
+            .ai-assistant {
+                width: 90%;
+                right: 5%;
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .user-list {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-permission {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            background: var(--success);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen">
+        <div class="login-container">
+            <h1>NexusForge</h1>
+            <p>Enterprise Website Creation Platform</p>
+            <input type="text" class="login-input" id="username" placeholder="Username" value="admin">
+            <input type="password" class="login-input" id="password" placeholder="Password" value="admin123">
+            <button class="login-button" onclick="login()">Access Platform</button>
+            <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: var(--gray);">
+                Secure Access • Master Creator Only
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="main-dashboard">
+        <div class="dashboard-header">
+            <div class="header-title">
+                <h1>Welcome back, Master Creator</h1>
+                <p>Your website creation empire awaits</p>
+            </div>
+            <div class="user-info">
+                <div class="avatar">MC</div>
+                <button class="login-button" onclick="logout()" style="width: auto; padding: 0.5rem 1rem;">Logout</button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="total-sites">0</div>
+                <div class="stat-label">Total Websites Created</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value" id="active-sites">0</div>
+                <div class="stat-label">Active Sites</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-value" id="total-users">0</div>
+                <div class="stat-label">Client Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🚀</div>
+                <div class="stat-value" id="revenue">$0</div>
+                <div class="stat-label">Total Revenue</div>
+            </div>
+        </div>
+
+        <!-- Template Categories -->
+        <h2 style="color: white; margin-bottom: 1rem;">Website Templates</h2>
+        <div class="templates-grid" id="templates-container"></div>
+
+        <!-- Recent Websites -->
+        <div style="background: white; border-radius: 15px; padding: 2rem; margin-top: 2rem;">
+            <h2 style="margin-bottom: 1rem;">Your Websites</h2>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #e5e7eb;">
+                            <th style="text-align: left; padding: 1rem;">Website</th>
+                            <th style="text-align: left; padding: 1rem;">Type</th>
+                            <th style="text-align: left; padding: 1rem;">Status</th>
+                            <th style="text-align: left; padding: 1rem;">Owner</th>
+                            <th style="text-align: left; padding: 1rem;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="websites-table">
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 2rem; color: var(--gray);">
+                                No websites created yet. Click on a template to start!
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Website Builder -->
+    <div id="builder-screen">
+        <div class="builder-header">
+            <h2 id="builder-title">Creating New Website</h2>
+            <div class="builder-actions">
+                <button class="builder-btn" onclick="toggleAIAssistant()">🤖 AI Assistant</button>
+                <button class="builder-btn" onclick="saveWebsite()">💾 Save</button>
+                <button class="builder-btn builder-btn-primary" onclick="previewWebsite()">👁️ Preview</button>
+                <button class="builder-btn builder-btn-success" onclick="transferOwnership()">🔄 Transfer</button>
+                <button class="builder-btn builder-btn-danger" onclick="closeBuilder()">✕ Close</button>
+            </div>
+        </div>
+        <div class="builder-container">
+            <div class="builder-sidebar">
+                <h3 style="margin-bottom: 1rem;">Elements</h3>
+                <ul class="element-list" id="elements-list">
+                    <li class="element-item" draggable="true" data-element="header">
+                        <span>📋</span> Header
+                    </li>
+                    <li class="element-item" draggable="true" data-element="hero">
+                        <span>🎯</span> Hero Section
+                    </li>
+                    <li class="element-item" draggable="true" data-element="features">
+                        <span>✨</span> Features
+                    </li>
+                    <li class="element-item" draggable="true" data-element="products">
+                        <span>🛍️</span> Products (E-commerce)
+                    </li>
+                    <li class="element-item" draggable="true" data-element="blog">
+                        <span>📝</span> Blog Posts
+                    </li>
+                    <li class="element-item" draggable="true" data-element="contact">
+                        <span>📞</span> Contact Form
+                    </li>
+                    <li class="element-item" draggable="true" data-element="footer">
+                        <span>🔻</span> Footer
+                    </li>
+                </ul>
+                
+                <h3 style="margin: 1rem 0;">AI Suggestions</h3>
+                <div id="ai-suggestions">
+                    <p style="color: var(--gray); font-size: 0.9rem;">Ask the AI assistant for design suggestions!</p>
+                </div>
+            </div>
+            <div class="builder-canvas" id="builder-canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="website-preview" id="website-preview">
+                    <div style="text-align: center; padding: 3rem; color: var(--gray);">
+                        <h3>Drop elements here to build your website</h3>
+                        <p>Or use the AI assistant to generate content</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant -->
+    <div class="ai-assistant" id="ai-assistant">
+        <div class="ai-header">
+            <h3>🤖 AI Design Assistant</h3>
+            <button style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer;" onclick="toggleAIAssistant()">✕</button>
+        </div>
+        <div class="ai-messages" id="ai-messages">
+            <div class="ai-message assistant">
+                Hello! I'm your AI design assistant. Tell me what kind of website you want to create, and I'll help you build it!
+            </div>
+        </div>
+        <div class="ai-input">
+            <input type="text" id="ai-input" placeholder="Ask me anything...">
+            <button onclick="sendAIMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Transfer Modal -->
+    <div class="modal" id="transfer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Transfer Website Ownership</h2>
+                <button class="close-modal" onclick="closeModal()">✕</button>
+            </div>
+            <p style="margin-bottom: 1rem;">Select users to grant access:</p>
+            <ul class="user-list" id="user-list"></ul>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <input type="email" class="login-input" id="new-user-email" placeholder="New user email" style="margin-bottom: 0;">
+                <button class="login-button" onclick="addUser()" style="width: auto;">Add</button>
+            </div>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button class="login-button" onclick="transferComplete()" style="flex: 1;">Complete Transfer</button>
+                <button class="builder-btn-danger" onclick="closeModal()" style="flex: 1;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Application State
+        let isAuthenticated = false;
+        let websites = [];
+        let users = [];
+        let currentWebsite = null;
+        let aiContext = [];
+
+        // Template Data
+        const templates = [
+            {
+                id: 'ecommerce',
+                name: 'E-Commerce Pro',
+                description: 'Full-featured online store with product management, cart, and payments',
+                icon: '🛍️',
+                tags: ['shop', 'payments', 'inventory'],
+                category: 'ecommerce'
+            },
+            {
+                id: 'business',
+                name: 'Corporate Elite',
+                description: 'Professional business website with services, team, and contact',
+                icon: '🏢',
+                tags: ['corporate', 'services', 'professional'],
+                category: 'business'
+            },
+            {
+                id: 'portfolio',
+                name: 'Portfolio Master',
+                description: 'Showcase your work with stunning galleries and case studies',
+                icon: '🎨',
+                tags: ['creative', 'gallery', 'showcase'],
+                category: 'portfolio'
+            },
+            {
+                id: 'media',
+                name: 'Media Hub',
+                description: 'Video and content platform with subscriptions and analytics',
+                icon: '📺',
+                tags: ['video', 'streaming', 'content'],
+                category: 'media'
+            },
+            {
+                id: 'nonprofit',
+                name: 'Non-Profit Impact',
+                description: 'Cause-driven website with donations and volunteer management',
+                icon: '🤝',
+                tags: ['charity', 'donations', 'community'],
+                category: 'nonprofit'
+            },
+            {
+                id: 'educational',
+                name: 'Learning Center',
+                description: 'Online courses, quizzes, and student management system',
+                icon: '📚',
+                tags: ['courses', 'learning', 'education'],
+                category: 'educational'
+            },
+            {
+                id: 'infopreneur',
+                name: 'Info Empire',
+                description: 'Digital products, membership sites, and content marketing',
+                icon: '💡',
+                tags: ['digital', 'membership', 'content'],
+                category: 'infopreneur'
+            }
+        ];
+
+        // Initialize the application
+        window.onload = function() {
+            loadTemplates();
+            loadStats();
+            checkAuth();
+        };
+
+        function checkAuth() {
+            const savedAuth = localStorage.getItem('nexusforge_auth');
+            if (savedAuth === 'true') {
+                isAuthenticated = true;
+                showDashboard();
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple authentication (in production, use proper backend auth)
+            if (username === 'admin' && password === 'admin123') {
+                isAuthenticated = true;
+                localStorage.setItem('nexusforge_auth', 'true');
+                showDashboard();
+                loadStats();
+            } else {
+                alert('Invalid credentials. Use admin/admin123');
+            }
+        }
+
+        function logout() {
+            isAuthenticated = false;
+            localStorage.removeItem('nexusforge_auth');
+            document.getElementById('login-screen').style.display = 'flex';
+            document.getElementById('main-dashboard').style.display = 'none';
+        }
+
+        function showDashboard() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('main-dashboard').style.display = 'block';
+        }
+
+        function loadTemplates() {
+            const container = document.getElementById('templates-container');
+            container.innerHTML = templates.map(template => `
+                <div class="template-card" onclick="createWebsite('${template.id}')">
+                    <div class="template-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <span style="font-size: 3rem; display: flex; justify-content: center; align-items: center; height: 100%;">
+                            ${template.icon}
+                        </span>
+                        <span class="template-badge">${template.category}</span>
+                    </div>
+                    <div class="template-info">
+                        <h3>${template.name}</h3>
+                        <p>${template.description}</p>
+                        <div class="template-tags">
+                            ${template.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadStats() {
+            // Simulate stats (in production, fetch from backend)
+            document.getElementById('total-sites').textContent = websites.length;
+            document.getElementById('active-sites').textContent = websites.filter(w => w.status === 'active').length;
+            document.getElementById('total-users').textContent = users.length;
+            document.getElementById('revenue').textContent = `$${websites.reduce((sum, w) => sum + (w.price || 0), 0)}`;
+        }
+
+        function createWebsite(templateId) {
+            const template = templates.find(t => t.id === templateId);
+            const websiteId = Date.now().toString();
+            
+            currentWebsite = {
+                id: websiteId,
+                template: templateId,
+                name: `New ${template.name}`,
+                type: template.category,
+                status: 'draft',
+                owner: 'admin',
+                users: [],
+                content: [],
+                price: 0,
+                createdAt: new Date().toISOString()
+            };
+            
+            websites.push(currentWebsite);
+            
+            document.getElementById('builder-title').textContent = `Creating: ${currentWebsite.name}`;
+            document.getElementById('builder-screen').style.display = 'block';
+            document.getElementById('main-dashboard').style.display = 'none';
+            
+            // Initialize with template structure
+            initializeWebsiteContent();
+            
+            loadWebsitesTable();
+            loadStats();
+        }
+
+        function initializeWebsiteContent() {
+            const preview = document.getElementById('website-preview');
+            
+            // Create initial structure based on template
+            let initialContent = '';
+            
+            switch(currentWebsite.template) {
+                case 'ecommerce':
+                    initialContent = `
+                        <header style="background: white; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <h1>My Store</h1>
+                        </header>
+                        <main style="padding: 2rem;">
+                            <h2>Welcome to our store!</h2>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                                <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 8px;">
+                                    <h3>Product 1</h3>
+                                    <p>$19.99</p>
+                                </div>
+                                <div style="border: 1px solid #e5e7eb; padding: 1rem; border-radius: 8px;">
+                                    <h3>Product 2</h3>
+                                    <p>$29.99</p>
+                                </div>
+                            </div>
+                        </main>
+                    `;
+                    break;
+                default:
+                    initialContent = `
+                        <header style="background: white; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <h1>${currentWebsite.name}</h1>
+                        </header>
+                        <main style="padding: 2rem;">
+                            <h2>Welcome to your new website!</h2>
+                            <p>Start customizing by dragging elements from the sidebar.</p>
+                        </main>
+                    `;
+            }
+            
+            preview.innerHTML = initialContent;
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const elementType = ev.dataTransfer.getData('text');
+            addElementToCanvas(elementType);
+        }
+
+        // Make elements draggable
+        document.querySelectorAll('.element-item').forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', item.dataset.element);
+            });
+        });
+
+        function addElementToCanvas(type) {
+            const preview = document.getElementById('website-preview');
+            const element = createElement(type);
+            preview.appendChild(element);
+            
+            // Add to website content
+            currentWebsite.content.push({
+                type: type,
+                content: element.outerHTML
+            });
+        }
+
+        function createElement(type) {
+            const div = document.createElement('div');
+            div.className = 'dropped-element';
+            div.style.margin = '1rem 0';
+            
+            switch(type) {
+                case 'header':
+                    div.innerHTML = `
+                        <header style="background: white; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <h2>Website Header</h2>
+                        </header>
+                    `;
+                    break;
+                case 'hero':
+                    div.innerHTML = `
+                        <section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 4rem; text-align: center;">
+                            <h1 style="font-size: 3rem; margin-bottom: 1rem;">Hero Section</h1>
+                            <p style="font-size: 1.2rem;">Add your compelling headline here</p>
+                        </section>
+                    `;
+                    break;
+                case 'features':
+                    div.innerHTML = `
+                        <section style="padding: 2rem;">
+                            <h2 style="text-align: center; margin-bottom: 2rem;">Features</h2>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                                <div><h3>Feature 1</h3><p>Description here</p></div>
+                                <div><h3>Feature 2</h3><p>Description here</p></div>
+                                <div><h3>Feature 3</h3><p>Description here</p></div>
+                            </div>
+                        </section>
+                    `;
+                    break;
+                case 'products':
+                    div.innerHTML = `
+                        <section style="padding: 2rem;">
+                            <h2 style="text-align: center; margin-bottom: 2rem;">Products</h2>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                                <div class="product-card" style="border: 1px solid #e5e7eb; padding: 1rem;">
+                                    <h3>Product Name</h3>
+                                    <p>$19.99</p>
+                                    <button style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px;">Add to Cart</button>
+                                </div>
+                            </div>
+                        </section>
+                    `;
+                    break;
+                default:
+                    div.innerHTML = `<div style="padding: 1rem; background: #f9fafb;">${type} element</div>`;
+            }
+            
+            return div;
+        }
+
+        function saveWebsite() {
+            currentWebsite.status = 'active';
+            currentWebsite.lastSaved = new Date().toISOString();
+            
+            // Save to localStorage
+            localStorage.setItem(`website_${currentWebsite.id}`, JSON.stringify(currentWebsite));
+            
+            alert('Website saved successfully!');
+            loadWebsitesTable();
+            loadStats();
+        }
+
+        function previewWebsite() {
+            // Open preview in new window
+            const previewWindow = window.open('', '_blank');
+            previewWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>${currentWebsite.name} Preview</title>
+                    <style>
+                        body { margin: 0; font-family: -apple-system, system-ui; }
+                    </style>
+                </head>
+                <body>
+                    ${document.getElementById('website-preview').innerHTML}
+                </body>
+                </html>
+            `);
+        }
+
+        function transferOwnership() {
+            document.getElementById('transfer-modal').style.display = 'flex';
+            loadUserList();
+        }
+
+        function loadUserList() {
+            const userList = document.getElementById('user-list');
+            userList.innerHTML = users.map(user => `
+                <li class="user-item">
+                    <span>${user.email}</span>
+                    <button class="user-permission" onclick="grantAccess('${user.id}')">Grant Access</button>
+                </li>
+            `).join('');
+        }
+
+        function grantAccess(userId) {
+            const user = users.find(u => u.id === userId);
+            if (user && !currentWebsite.users.includes(userId)) {
+                currentWebsite.users.push(userId);
+                alert(`Access granted to ${user.email}`);
+            }
+        }
+
+        function addUser() {
+            const email = document.getElementById('new-user-email').value;
+            if (email) {
+                const newUser = {
+                    id: Date.now().toString(),
+                    email: email,
+                    websites: []
+                };
+                users.push(newUser);
+                loadUserList();
+                document.getElementById('new-user-email').value = '';
+            }
+        }
+
+        function transferComplete() {
+            closeModal();
+            
+            // Set price for the website (simulate sale)
+            const price = prompt('Enter sale price for this website:', '500');
+            if (price) {
+                currentWebsite.price = parseFloat(price);
+                currentWebsite.status = 'sold';
+                currentWebsite.soldAt = new Date().toISOString();
+                
+                alert(`Website transferred successfully! Revenue: $${price}`);
+                loadWebsitesTable();
+                loadStats();
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('transfer-modal').style.display = 'none';
+        }
+
+        function closeBuilder() {
+            if (confirm('Save changes before closing?')) {
+                saveWebsite();
+            }
+            document.getElementById('builder-screen').style.display = 'none';
+            document.getElementById('main-dashboard').style.display = 'block';
+            currentWebsite = null;
+        }
+
+        function toggleAIAssistant() {
+            const assistant = document.getElementById('ai-assistant');
+            if (assistant.style.display === 'none' || assistant.style.display === '') {
+                assistant.style.display = 'block';
+            } else {
+                assistant.style.display = 'none';
+            }
+        }
+
+        function sendAIMessage() {
+            const input = document.getElementById('ai-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            const messagesDiv = document.getElementById('ai-messages');
+            messagesDiv.innerHTML += `
+                <div class="ai-message user">${message}</div>
+            `;
+            
+            // Simulate AI response
+            setTimeout(() => {
+                const responses = [
+                    "I can help you design that! Would you like me to add a hero section with a call-to-action?",
+                    "Great choice! I'll optimize this for conversions. Adding product showcases...",
+                    "I recommend using a responsive grid layout for better mobile experience.",
+                    "I've analyzed successful websites in this category and can suggest improvements.",
+                    "Would you like me to generate some sample content for your pages?"
+                ];
+                
+                const response = responses[Math.floor(Math.random() * responses.length)];
+                messagesDiv.innerHTML += `
+                    <div class="ai-message assistant">${response}</div>
+                `;
+                
+                // Auto-suggest elements based on context
+                if (message.toLowerCase().includes('shop') || message.toLowerCase().includes('store')) {
+                    addElementToCanvas('products');
+                } else if (message.toLowerCase().includes('feature')) {
+                    addElementToCanvas('features');
+                }
+                
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }, 1000);
+            
+            input.value = '';
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function loadWebsitesTable() {
+            const tableBody = document.getElementById('websites-table');
+            
+            if (websites.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 2rem; color: var(--gray);">
+                            No websites created yet. Click on a template to start!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tableBody.innerHTML = websites.map(website => `
+                <tr style="border-bottom: 1px solid #e5e7eb;">
+                    <td style="padding: 1rem;">
+                        <strong>${website.name}</strong><br>
+                        <small style="color: var(--gray);">ID: ${website.id}</small>
+                    </td>
+                    <td style="padding: 1rem;">${website.type}</td>
+                    <td style="padding: 1rem;">
+                        <span style="background: ${website.status === 'active' ? '#10b981' : website.status === 'sold' ? '#f59e0b' : '#9ca3af'}; 
+                                   color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">
+                            ${website.status}
+                        </span>
+                    </td>
+                    <td style="padding: 1rem;">
+                        ${website.users.length} user(s)
+                    </td>
+                    <td style="padding: 1rem;">
+                        <button class="builder-btn" onclick="editWebsite('${website.id}')" style="margin-right: 0.5rem;">Edit</button>
+                        <button class="builder-btn builder-btn-success" onclick="transferExisting('${website.id}')">Transfer</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function editWebsite(id) {
+            const website = websites.find(w => w.id === id);
+            if (website) {
+                currentWebsite = website;
+                document.getElementById('builder-title').textContent = `Editing: ${website.name}`;
+                document.getElementById('builder-screen').style.display = 'block';
+                document.getElementById('main-dashboard').style.display = 'none';
+                
+                // Load saved content
+                if (website.content && website.content.length > 0) {
+                    const preview = document.getElementById('website-preview');
+                    preview.innerHTML = website.content.map(c => c.content).join('');
+                }
+            }
+        }
+
+        function transferExisting(id) {
+            const website = websites.find(w => w.id === id);
+            if (website) {
+                currentWebsite = website;
+                transferOwnership();
+            }
+        }
+    </script>
+</body>
+</html>
