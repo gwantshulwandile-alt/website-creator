@@ -1,1495 +1,1019 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>WebForge Elite | Professional Website Building Platform</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Google Sign-In -->
-    <meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --primary-light: #93c5fd;
-            --primary-soft: #dbeafe;
-            --secondary: #8b5cf6;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            --white: #ffffff;
-            
-            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
-            --radius-2xl: 1.5rem;
-            --radius-full: 9999px;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--gray-50);
-            color: var(--gray-900);
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Hero Section */
-        .hero-section {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            text-align: center;
-            color: white;
-            padding: 2rem;
-            max-width: 800px;
-            z-index: 10;
-        }
-
-        .hero-logo {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .hero-logo i {
-            animation: float 3s ease infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 3rem;
-        }
-
-        .hero-btn {
-            padding: 1rem 2rem;
-            border-radius: var(--radius-lg);
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .hero-btn-primary {
-            background: white;
-            color: var(--primary);
-        }
-
-        .hero-btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .hero-btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .hero-btn-secondary:hover {
-            border-color: white;
-            transform: translateY(-2px);
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 3rem;
-            justify-content: center;
-        }
-
-        .hero-stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .hero-stat-label {
-            opacity: 0.8;
-        }
-
-        /* Login Screen */
-        #login-screen {
-            display: none;
-            min-height: 100vh;
-            background: var(--gray-50);
-            padding: 2rem;
-        }
-
-        .login-wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            min-height: calc(100vh - 4rem);
-        }
-
-        .login-left h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1.5rem;
-        }
-
-        .login-left p {
-            font-size: 1.1rem;
-            color: var(--gray-600);
-            margin-bottom: 2rem;
-        }
-
-        .login-features {
-            list-style: none;
-        }
-
-        .login-features li {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .login-features i {
-            color: var(--success);
-        }
-
-        .login-container {
-            background: var(--white);
-            border-radius: var(--radius-2xl);
-            box-shadow: var(--shadow-xl);
-            padding: 2.5rem;
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-header h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .input-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--gray-700);
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-wrapper i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-400);
-        }
-
-        .input-wrapper input {
-            width: 100%;
-            padding: 0.875rem 1rem 0.875rem 2.75rem;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-lg);
-            font-size: 1rem;
-            transition: all 0.2s;
-        }
-
-        .input-wrapper input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .recaptcha-box {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--gray-50);
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-lg);
-            margin: 1.5rem 0;
-            cursor: pointer;
-        }
-
-        .recaptcha-box input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-        }
-
-        .login-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 1.5rem 0;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-600);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 0.875rem;
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius-lg);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .signup-prompt {
-            text-align: center;
-            margin: 1.5rem 0;
-            color: var(--gray-600);
-        }
-
-        .signup-prompt a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .security-badges {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--gray-200);
-        }
-
-        .badge {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-500);
-            font-size: 0.8rem;
-        }
-
-        /* Dashboard Navigation */
-        #main-dashboard {
-            display: none;
-        }
-
-        .dashboard-nav {
-            background: var(--white);
-            border-bottom: 1px solid var(--gray-200);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .nav-logo i {
-            color: var(--primary);
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-link {
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 500;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 1rem;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: var(--primary);
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            cursor: pointer;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: var(--gradient-primary);
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-
-        .user-info {
-            text-align: right;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .user-plan {
-            font-size: 0.8rem;
-            color: var(--gray-500);
-        }
-
-        .logout-btn {
-            padding: 0.5rem 1rem;
-            background: var(--gray-100);
-            border: none;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-600);
-        }
-
-        .logout-btn:hover {
-            background: var(--gray-200);
-        }
-
-        .dashboard-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Welcome Section */
-        .welcome-section {
-            background: var(--gradient-primary);
-            border-radius: var(--radius-2xl);
-            padding: 2.5rem;
-            color: white;
-            margin-bottom: 2rem;
-        }
-
-        .welcome-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .welcome-stats {
-            display: flex;
-            gap: 2rem;
-            margin-top: 1.5rem;
-        }
-
-        .welcome-stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--white);
-            border-radius: var(--radius-xl);
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border: 1px solid var(--gray-200);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .stat-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--primary-soft);
-            color: var(--primary);
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-
-        .stat-label {
-            color: var(--gray-500);
-        }
-
-        /* Templates */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 2rem 0 1.5rem;
-        }
-
-        .section-header h2 {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .view-all {
-            color: var(--primary);
-            background: none;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            font-weight: 500;
-        }
-
-        .categories {
-            display: flex;
-            gap: 0.75rem;
-            overflow-x: auto;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .category-btn {
-            padding: 0.5rem 1.25rem;
-            background: var(--white);
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-full);
-            color: var(--gray-600);
-            font-weight: 500;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .category-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .templates-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebForge - Build, Sell, Scale</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* RESET & BASE */
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; }
+  html, body { height:100%; background:#f4f6f8; color:#111; }
+  a { text-decoration:none; color:inherit; }
+  button { cursor:pointer; }
+  .hidden { display:none; }
+
+  /* DARK MODE */
+  body.dark { background:#121212; color:#e0e0e0; }
+  .dark .card { background:#1e1e1e; color:#e0e0e0; }
+
+  /* LAYOUT */
+  header { display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,0.05); position:sticky; top:0; z-index:100; }
+  .dark header { background:#1f1f1f; }
+  header h1 { font-weight:700; font-size:1.6rem; color:#0070f3; }
+  nav { display:flex; gap:1rem; }
+  nav a { font-weight:500; transition:0.2s; }
+  nav a:hover { color:#0070f3; }
+
+  /* BUTTONS */
+  .btn { padding:.5rem 1rem; background:#0070f3; color:#fff; border:none; border-radius:5px; transition:0.2s; }
+  .btn:hover { background:#005bdc; }
+
+  /* DASHBOARD GRID */
+  .dashboard { display:grid; grid-template-columns:1fr 3fr; min-height:calc(100vh - 70px); }
+  .sidebar { background:#fff; padding:2rem; border-right:1px solid #ddd; }
+  .dark .sidebar { background:#1f1f1f; border-color:#333; }
+  .sidebar ul { list-style:none; display:flex; flex-direction:column; gap:1rem; }
+  .sidebar ul li { padding:.5rem 0; cursor:pointer; transition:.2s; }
+  .sidebar ul li:hover { color:#0070f3; }
+  .content { padding:2rem; overflow-y:auto; }
+
+  /* CARD */
+  .card { background:#fff; padding:1.5rem; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.05); margin-bottom:1.5rem; }
+  .dark .card { background:#1e1e1e; }
+
+  /* MODAL */
+  .modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; visibility:hidden; opacity:0; transition:.3s; }
+  .modal.active { visibility:visible; opacity:1; }
+  .modal-content { background:#fff; padding:2rem; border-radius:10px; max-width:500px; width:90%; position:relative; }
+  .dark .modal-content { background:#1f1f1f; }
+  .modal-content h2 { margin-bottom:1rem; }
+  .modal-content button.close { position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.2rem; }
+
+  /* ONBOARDING */
+  .onboarding-step { display:none; }
+  .onboarding-step.active { display:block; }
+
+</style>
 </head>
 <body>
-    <!-- Hero Section -->
-<div id="hero-section" class="hero-section">
-    <div class="hero-content">
-        <div class="hero-logo">
-            <i class="fas fa-crown"></i>
-            <span>WebForge</span>
-            <i class="fas fa-crown"></i>
-        </div>
-        <h1 class="hero-title">Build Stunning Websites<br>For Your Clients</h1>
-        <p class="hero-subtitle">Create professional websites in minutes. Sell to clients. Keep 100% profit. No monthly fees, no hidden costs.</p>
-        <div class="hero-buttons">
-            <button class="hero-btn hero-btn-primary" onclick="showLogin()">
-                <i class="fas fa-rocket"></i> Get Started Free
-            </button>
-            <button class="hero-btn hero-btn-secondary" onclick="showFeatures()">
-                <i class="fas fa-play"></i> See How It Works
-            </button>
-        </div>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="hero-stat-value">25+</div>
-                <div class="hero-stat-label">Pro Templates</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-value">100%</div>
-                <div class="hero-stat-label">Your Profit</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-value">24/7</div>
-                <div class="hero-stat-label">AI Support</div>
-            </div>
-        </div>
+
+<header>
+  <h1>WebForge</h1>
+  <nav>
+    <a href="#" id="toggle-dark">🌙</a>
+    <a href="#" id="profile-link">Profile</a>
+    <a href="#" id="logout-btn">Logout</a>
+  </nav>
+</header>
+
+<div class="dashboard">
+  <div class="sidebar">
+    <ul>
+      <li id="nav-home"><i class="fa fa-home"></i> Home</li>
+      <li id="nav-builder"><i class="fa fa-tools"></i> Builder</li>
+      <li id="nav-marketplace"><i class="fa fa-store"></i> Marketplace</li>
+      <li id="nav-analytics"><i class="fa fa-chart-line"></i> Analytics</li>
+      <li id="nav-settings"><i class="fa fa-cog"></i> Settings</li>
+    </ul>
+  </div>
+  <div class="content" id="main-content">
+    <div class="card">
+      <h2>Welcome to WebForge!</h2>
+      <p>Start building your websites, selling products, and growing your business.</p>
     </div>
+    <div class="card">
+      <h3>Your Websites</h3>
+      <ul id="website-list">
+        <li>Loading...</li>
+      </ul>
+    </div>
+  </div>
 </div>
 
-<!-- Login Screen -->
-<div id="login-screen">
-    <div class="login-wrapper">
-        <div class="login-left">
-            <h1>Start Building Your Empire Today</h1>
-            <p>Join thousands of creators who are building successful website businesses with WebForge. No coding required, no monthly fees, unlimited potential.</p>
-            <ul class="login-features">
-                <li><i class="fas fa-check-circle"></i> 25+ Premium Templates</li>
-                <li><i class="fas fa-check-circle"></i> AI-Powered Builder</li>
-                <li><i class="fas fa-check-circle"></i> Client Management Portal</li>
-                <li><i class="fas fa-check-circle"></i> Built-in Analytics</li>
-                <li><i class="fas fa-check-circle"></i> 100% Profit Retention</li>
-                <li><i class="fas fa-check-circle"></i> South African Optimized</li>
-            </ul>
-        </div>
-        <div class="login-container">
-            <div class="login-header">
-                <h2>Welcome Back</h2>
-                <p>Sign in to continue your journey</p>
-            </div>
-
-            <!-- Google Sign In -->
-            <div class="g-signin2" data-onsuccess="onGoogleSignIn" data-theme="dark" style="margin: 0 auto 1rem;"></div>
-
-            <div style="text-align: center; margin: 1rem 0; color: var(--gray-400);">or</div>
-
-            <div class="input-group">
-                <label>Email Address</label>
-                <div class="input-wrapper">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="email" placeholder="you@example.com">
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label>Password</label>
-                <div class="input-wrapper">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="password" placeholder="••••••••">
-                </div>
-            </div>
-
-            <!-- reCAPTCHA -->
-            <div class="recaptcha-box" onclick="toggleRecaptcha()">
-                <input type="checkbox" id="recaptcha" checked>
-                <i class="fas fa-robot"></i>
-                <span>I'm not a robot</span>
-            </div>
-
-            <div class="login-options">
-                <label class="remember-me">
-                    <input type="checkbox" id="remember-me" checked> Remember me
-                </label>
-                <a href="#" onclick="showNotification('Password reset email sent!', 'info')">Forgot password?</a>
-            </div>
-
-            <button class="login-btn" onclick="login()">
-                <i class="fas fa-arrow-right"></i> Sign In
-            </button>
-
-            <div class="signup-prompt">
-                Don't have an account? <a href="#" onclick="showSignup()">Create free account</a>
-            </div>
-
-            <div class="security-badges">
-                <span class="badge"><i class="fas fa-shield-alt"></i> 256-bit SSL</span>
-                <span class="badge"><i class="fas fa-clock"></i> 15min session</span>
-                <span class="badge"><i class="fas fa-mobile-alt"></i> 2FA ready</span>
-            </div>
-        </div>
+<!-- MODALS -->
+<div class="modal" id="onboarding-modal">
+  <div class="modal-content">
+    <button class="close" id="close-onboarding">&times;</button>
+    <h2>Welcome to WebForge!</h2>
+    <div class="onboarding-step active" id="step1">
+      <p>Step 1: Set up your profile.</p>
+      <button id="next-step1" class="btn">Next</button>
     </div>
+    <div class="onboarding-step" id="step2">
+      <p>Step 2: Explore the website builder.</p>
+      <button id="next-step2" class="btn">Next</button>
+    </div>
+    <div class="onboarding-step" id="step3">
+      <p>Step 3: Check out the marketplace and products.</p>
+      <button id="finish-onboarding" class="btn">Finish</button>
+    </div>
+  </div>
 </div>
 
-<!-- Main Dashboard -->
-<div id="main-dashboard">
-    <nav class="dashboard-nav">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-crown"></i>
-                <span>WebForge</span>
-            </div>
-            <div class="nav-menu">
-                <button class="nav-link active" onclick="showDashboardSection('dashboard')">Dashboard</button>
-                <button class="nav-link" onclick="showDashboardSection('templates')">Templates</button>
-                <button class="nav-link" onclick="showDashboardSection('analytics')">Analytics</button>
-                <button class="nav-link" onclick="showDashboardSection('clients')">Clients</button>
-            </div>
-            <div class="user-profile" onclick="showUserMenu()">
-                <div class="user-avatar">MC</div>
-                <div class="user-info">
-                    <div class="user-name">Master Creator</div>
-                    <div class="user-plan">Enterprise Plan</div>
-                </div>
-                <button class="logout-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <div class="dashboard-content">
-        <!-- Welcome Section -->
-        <div class="welcome-section">
-            <h1 class="welcome-title">Welcome back, Master Creator! 👋</h1>
-            <p>Your website empire is growing. Here's what's happening today.</p>
-            <div class="welcome-stats">
-                <div>
-                    <div class="welcome-stat-value" id="total-sites">0</div>
-                    <div>Total Sites</div>
-                </div>
-                <div>
-                    <div class="welcome-stat-value" id="active-clients">0</div>
-                    <div>Active Clients</div>
-                </div>
-                <div>
-                    <div class="welcome-stat-value" id="monthly-revenue">R0</div>
-                    <div>This Month</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Stats Grid -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-globe"></i></div>
-                <div>
-                    <div class="stat-value" id="stat-total">0</div>
-                    <div class="stat-label">Total Websites</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-rocket"></i></div>
-                <div>
-                    <div class="stat-value" id="stat-active">0</div>
-                    <div class="stat-label">Active Sites</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-users"></i></div>
-                <div>
-                    <div class="stat-value" id="stat-clients">0</div>
-                    <div class="stat-label">Total Clients</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
-                <div>
-                    <div class="stat-value" id="stat-revenue">R0</div>
-                    <div class="stat-label">Total Revenue</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Templates Section -->
-        <div class="section-header">
-            <h2><i class="fas fa-template"></i> Pick Your Template</h2>
-            <button class="view-all" onclick="showAllTemplates()">View All <i class="fas fa-arrow-right"></i></button>
-        </div>
-
-        <div class="categories">
-            <button class="category-btn active" onclick="filterTemplates('all')">All</button>
-            <button class="category-btn" onclick="filterTemplates('business')">Business</button>
-            <button class="category-btn" onclick="filterTemplates('ecommerce')">E-commerce</button>
-            <button class="category-btn" onclick="filterTemplates('portfolio')">Portfolio</button>
-        </div>
-
-        <div class="templates-grid" id="templates-container"></div>
-    </div>
-                        </div>
-                        <!-- Website Builder -->
-<div id="builder-screen" style="display: none;">
-    <div class="builder-header" style="background: var(--gray-900); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;">
-        <h2><i class="fas fa-paint-brush"></i> <span id="builder-title">Building: New Website</span></h2>
-        <div style="display: flex; gap: 0.75rem;">
-            <button class="builder-btn" onclick="saveWebsite()" style="padding: 0.6rem 1.25rem; background: var(--gray-700); color: white; border: none; border-radius: var(--radius-md); cursor: pointer;">
-                <i class="fas fa-save"></i> Save
-            </button>
-            <button class="builder-btn builder-btn-primary" onclick="previewWebsite()" style="padding: 0.6rem 1.25rem; background: var(--primary); color: white; border: none; border-radius: var(--radius-md); cursor: pointer;">
-                <i class="fas fa-eye"></i> Preview
-            </button>
-            <button class="builder-btn builder-btn-success" onclick="publishWebsite()" style="padding: 0.6rem 1.25rem; background: var(--success); color: white; border: none; border-radius: var(--radius-md); cursor: pointer;">
-                <i class="fas fa-globe"></i> Publish
-            </button>
-            <button class="builder-btn builder-btn-danger" onclick="closeBuilder()" style="padding: 0.6rem 1.25rem; background: transparent; color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: var(--radius-md); cursor: pointer;">
-                <i class="fas fa-times"></i> Close
-            </button>
-        </div>
-    </div>
-    <div style="display: flex; height: calc(100vh - 70px);">
-        <div style="width: 280px; background: var(--gray-50); border-right: 1px solid var(--gray-200); padding: 1.5rem; overflow-y: auto;">
-            <div style="margin-bottom: 2rem;">
-                <h3 style="font-size: 0.8rem; color: var(--gray-500); margin-bottom: 1rem;">ELEMENTS</h3>
-                <ul style="list-style: none;">
-                    <li draggable="true" ondragstart="drag(event)" data-element="header" style="padding: 0.75rem 1rem; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); margin-bottom: 0.5rem; cursor: move; display: flex; align-items: center; gap: 0.75rem;">
-                        <i class="fas fa-heading" style="color: var(--primary);"></i> Header
-                    </li>
-                    <li draggable="true" ondragstart="drag(event)" data-element="hero" style="padding: 0.75rem 1rem; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); margin-bottom: 0.5rem; cursor: move; display: flex; align-items: center; gap: 0.75rem;">
-                        <i class="fas fa-star" style="color: var(--primary);"></i> Hero Section
-                    </li>
-                    <li draggable="true" ondragstart="drag(event)" data-element="features" style="padding: 0.75rem 1rem; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); margin-bottom: 0.5rem; cursor: move; display: flex; align-items: center; gap: 0.75rem;">
-                        <i class="fas fa-list" style="color: var(--primary);"></i> Features
-                    </li>
-                    <li draggable="true" ondragstart="drag(event)" data-element="products" style="padding: 0.75rem 1rem; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); margin-bottom: 0.5rem; cursor: move; display: flex; align-items: center; gap: 0.75rem;">
-                        <i class="fas fa-shopping-cart" style="color: var(--primary);"></i> Products
-                    </li>
-                    <li draggable="true" ondragstart="drag(event)" data-element="about" style="padding: 0.75rem 1rem; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); margin-bottom: 0.5rem; cursor: move; display: flex; align-items: center; gap: 0.75rem;">
-                        <i class="fas fa-info-circle" style="color: var(--primary);"></i> About
-                    </li>
-                    <li draggable="true" ondragstart="drag(event)" data-element="contact" style="padding: 0.75rem 1rem; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); margin-bottom: 0.5rem; cursor: move; display: flex; align-items: center; gap: 0.75rem;">
-                        <i class="fas fa-envelope" style="color: var(--primary);"></i> Contact
-                    </li>
-                    <li draggable="true" ondragstart="drag(event)" data-element="footer" style="padding: 0.75rem 1rem; background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); margin-bottom: 0.5rem; cursor: move; display: flex; align-items: center; gap: 0.75rem;">
-                        <i class="fas fa-shoe-prints" style="color: var(--primary);"></i> Footer
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <h3 style="font-size: 0.8rem; color: var(--gray-500); margin-bottom: 1rem;">AI ASSISTANT</h3>
-                <div style="background: var(--primary-soft); padding: 1rem; border-radius: var(--radius-lg);">
-                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">Ask me to help build your site!</p>
-                    <input type="text" id="ai-request" placeholder="e.g., Add a hero section" style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
-                    <button onclick="processAIRequest()" style="width: 100%; margin-top: 0.5rem; padding: 0.5rem; background: var(--primary); color: white; border: none; border-radius: var(--radius-md); cursor: pointer;">Send</button>
-                </div>
-            </div>
-        </div>
-        <div style="flex: 1; padding: 2rem; overflow-y: auto; background: var(--gray-100);" id="builder-canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <div class="website-preview" id="website-preview" style="background: white; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); min-height: 100%; padding: 2rem;">
-                <div style="text-align: center; padding: 3rem; color: var(--gray-400);">
-                    <i class="fas fa-arrow-left" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                    <h3>Drag elements here to build your website</h3>
-                    <p>Or use the AI assistant to generate content</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Client Dashboard -->
-<div id="client-dashboard" style="display: none;">
-    <div style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
-        <div style="background: white; border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <h1 id="client-name" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Welcome, Client!</h1>
-                <p style="color: var(--gray-500);">Manage your websites and track performance</p>
-            </div>
-            <div style="padding: 0.5rem 1.5rem; background: var(--primary-soft); color: var(--primary); border-radius: var(--radius-full); font-weight: 600;" id="client-plan">Business Plan</div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
-            <div style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; text-align: center;">
-                <div style="font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;" id="client-websites">0</div>
-                <div style="color: var(--gray-500);">Your Websites</div>
-            </div>
-            <div style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; text-align: center;">
-                <div style="font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;" id="client-views">0</div>
-                <div style="color: var(--gray-500);">Total Views</div>
-            </div>
-            <div style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; text-align: center;">
-                <div style="font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;" id="client-visitors">0</div>
-                <div style="color: var(--gray-500);">Visitors</div>
-            </div>
-        </div>
-
-        <div style="background: white; border-radius: var(--radius-xl); padding: 2rem;">
-            <h3 style="margin-bottom: 1.5rem;">Your Websites</h3>
-            <div id="client-websites-list"></div>
-        </div>
-    </div>
-</div>
-
-<!-- Pricing Section -->
-<div style="max-width: 1400px; margin: 0 auto; padding: 2rem;">
-    <div class="pricing-section" style="background: white; border-radius: var(--radius-xl); padding: 3rem;">
-        <div style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">
-            <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">Choose Your Plan</h2>
-            <p style="color: var(--gray-500);">You set the prices for your clients. These are your earnings per website.</p>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-            <div class="pricing-card" style="background: var(--gray-50); border-radius: var(--radius-xl); padding: 2rem; border: 1px solid var(--gray-200);">
-                <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Basic</div>
-                <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;">R2,500 <span style="font-size: 1rem; color: var(--gray-500);">/site</span></div>
-                <div style="color: var(--gray-500); margin-bottom: 2rem;">One-time payment</div>
-                <ul style="list-style: none; margin-bottom: 2rem;">
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>Professional Design</li>
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>Mobile Optimized</li>
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>5 Pages</li>
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>Contact Form</li>
-                </ul>
-                <button class="pricing-btn" onclick="selectPlan('basic')" style="width: 100%; padding: 1rem; background: white; border: 2px solid var(--gray-200); border-radius: var(--radius-lg); cursor: pointer;">Select Plan</button>
-            </div>
-            <div class="pricing-card" style="background: white; border-radius: var(--radius-xl); padding: 2rem; border: 2px solid var(--primary); position: relative;">
-                <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 0.35rem 1.5rem; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 600;">MOST POPULAR</div>
-                <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Business</div>
-                <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;">R5,000 <span style="font-size: 1rem; color: var(--gray-500);">/site</span></div>
-                <div style="color: var(--gray-500); margin-bottom: 2rem;">One-time payment</div>
-                <ul style="list-style: none; margin-bottom: 2rem;">
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>Everything in Basic</li>
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>E-commerce Ready</li>
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>20 Products</li>
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>Payment Integration</li>
-                </ul>
-                <button class="pricing-btn" onclick="selectPlan('business')" style="width: 100%; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: var(--radius-lg); cursor: pointer;">Select Plan</button>
-            </div>
-            <div class="pricing-card" style="background: var(--gray-50); border-radius: var(--radius-xl); padding: 2rem; border: 1px solid var(--gray-200);">
-                <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Enterprise</div>
-                <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;">R10,000 <span style="font-size: 1rem; color: var(--gray-500);">/site</span></div>
-                <div style="color: var(--gray-500); margin-bottom: 2rem;">One-time payment</div>
-                <ul style="list-style: none; margin-bottom: 2rem;">
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>Everything in Business</li>
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>Unlimited Products</li>
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>Custom Features</li>
-                    <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--gray-200);"><i class="fas fa-check" style="color: var(--success); margin-right: 0.75rem;"></i>Priority Support</li>
-                </ul>
-                <button class="pricing-btn" onclick="selectPlan('enterprise')" style="width: 100%; padding: 1rem; background: white; border: 2px solid var(--gray-200); border-radius: var(--radius-lg); cursor: pointer;">Select Plan</button>
-            </div>
-        </div>
-    </div>
-    </div>
-    <!-- Recent Websites Table -->
-<div style="max-width: 1400px; margin: 2rem auto; padding: 0 2rem;">
-    <div style="background: white; border-radius: var(--radius-xl); padding: 2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-            <h2 style="display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-clock"></i> Recent Websites</h2>
-            <button class="view-all" onclick="createNewSite()" style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: var(--radius-md); cursor: pointer;">
-                <i class="fas fa-plus"></i> New Website
-            </button>
-        </div>
-        <div style="overflow-x: auto;">
-            <table style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr style="border-bottom: 2px solid var(--gray-200);">
-                        <th style="text-align: left; padding: 1rem;">Website</th>
-                        <th style="text-align: left; padding: 1rem;">Type</th>
-                        <th style="text-align: left; padding: 1rem;">Status</th>
-                        <th style="text-align: left; padding: 1rem;">Client</th>
-                        <th style="text-align: left; padding: 1rem;">Price</th>
-                        <th style="text-align: left; padding: 1rem;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="websites-table">
-                    <tr>
-                        <td colspan="6" style="text-align: center; padding: 3rem; color: var(--gray-500);">
-                            <i class="fas fa-folder-open" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
-                            No websites yet. Click "New Website" to start!
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- Footer -->
-<footer style="background: var(--gray-900); color: white; padding: 4rem 2rem 2rem; margin-top: 4rem;">
-    <div style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem;">
-        <div>
-            <h3 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;"><i class="fas fa-crown"></i> WebForge Elite</h3>
-            <p style="color: var(--gray-400); line-height: 1.6; margin-bottom: 1.5rem;">The ultimate platform for building and selling websites to clients. 100% profit, 0% monthly fees.</p>
-            <div style="display: flex; gap: 1rem;">
-                <a href="#" style="width: 40px; height: 40px; background: var(--gray-800); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" style="width: 40px; height: 40px; background: var(--gray-800); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none;"><i class="fab fa-twitter"></i></a>
-                <a href="#" style="width: 40px; height: 40px; background: var(--gray-800); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none;"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-        <div>
-            <h3 style="margin-bottom: 1.5rem;">Product</h3>
-            <ul style="list-style: none;">
-                <li style="margin-bottom: 0.75rem;"><a href="#" onclick="showTemplates()" style="color: var(--gray-400); text-decoration: none;">Templates</a></li>
-                <li style="margin-bottom: 0.75rem;"><a href="#" onclick="showPricing()" style="color: var(--gray-400); text-decoration: none;">Pricing</a></li>
-                <li style="margin-bottom: 0.75rem;"><a href="#" onclick="showFeatures()" style="color: var(--gray-400); text-decoration: none;">Features</a></li>
-            </ul>
-        </div>
-        <div>
-            <h3 style="margin-bottom: 1.5rem;">Support</h3>
-            <ul style="list-style: none;">
-                <li style="margin-bottom: 0.75rem;"><a href="#" onclick="showHelp()" style="color: var(--gray-400); text-decoration: none;">Help Center</a></li>
-                <li style="margin-bottom: 0.75rem;"><a href="#" onclick="showGuides()" style="color: var(--gray-400); text-decoration: none;">Guides</a></li>
-                <li style="margin-bottom: 0.75rem;"><a href="#" onclick="showContact()" style="color: var(--gray-400); text-decoration: none;">Contact</a></li>
-            </ul>
-        </div>
-    </div>
-    <div style="max-width: 1400px; margin: 3rem auto 0; padding-top: 2rem; border-top: 1px solid var(--gray-800); text-align: center; color: var(--gray-500);">
-        <p>&copy; 2024 WebForge Elite. All rights reserved. Made for creators, by creators.</p>
-    </div>
-</footer>
-
-<!-- Transfer Modal -->
-<div class="modal" id="transfer-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
-    <div style="background: white; border-radius: var(--radius-2xl); padding: 2rem; max-width: 500px; width: 90%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-            <h2 style="font-size: 1.5rem;"><i class="fas fa-exchange-alt"></i> Transfer Website</h2>
-            <button class="close-modal" onclick="closeModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
-        </div>
-        <p style="margin-bottom: 1.5rem;">Transfer ownership to a client. They'll get their own login.</p>
-        <div style="margin-bottom: 1.25rem;">
-            <label style="display: block; margin-bottom: 0.5rem;">Client Email</label>
-            <input type="email" id="transfer-email" placeholder="client@example.com" style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
-        </div>
-        <div style="margin-bottom: 1.5rem;">
-            <label style="display: block; margin-bottom: 0.5rem;">Access Level</label>
-            <select id="transfer-level" style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
-                <option value="viewer">View Only</option>
-                <option value="editor">Can Edit</option>
-                <option value="admin">Full Access</option>
-            </select>
-        </div>
-        <div style="display: flex; gap: 1rem;">
-            <button onclick="completeTransfer()" style="flex: 2; padding: 0.875rem; background: var(--gradient-primary); color: white; border: none; border-radius: var(--radius-lg); cursor: pointer;">Complete Transfer</button>
-            <button onclick="closeModal()" style="flex: 1; padding: 0.875rem; background: var(--gray-100); border: none; border-radius: var(--radius-lg); cursor: pointer;">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<!-- Notification Container -->
-<div id="notification-container" style="position: fixed; top: 1rem; right: 1rem; z-index: 9999;"></div>
-
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 <script>
-    // ==================== DATA & STATE ====================
-    let isAuthenticated = false;
-    let websites = JSON.parse(localStorage.getItem('websites')) || [];
-    let users = JSON.parse(localStorage.getItem('users')) || [];
-    let currentWebsite = null;
-    let currentUser = null;
-    let revenueChart = null;
+  // FIREBASE CONFIG
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_ID",
+    appId: "YOUR_APP_ID",
+    measurementId: "YOUR_MEASUREMENT_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const analytics = firebase.analytics();
 
-    const templates = [
-        { id: 'ecommerce-pro', name: 'E-Commerce Pro', description: 'Advanced online store with inventory', icon: 'fa-cart-shopping', tags: ['shop', 'payments'], category: 'ecommerce', popular: true },
-        { id: 'ecommerce-basic', name: 'E-Commerce Basic', description: 'Simple store for small businesses', icon: 'fa-bag-shopping', tags: ['shop', 'basic'], category: 'ecommerce' },
-        { id: 'corporate-premium', name: 'Corporate Premium', description: 'Professional business site', icon: 'fa-building', tags: ['corporate', 'professional'], category: 'business', popular: true },
-        { id: 'corporate-basic', name: 'Corporate Basic', description: 'Clean business website', icon: 'fa-briefcase', tags: ['corporate', 'local'], category: 'business' },
-        { id: 'portfolio-creative', name: 'Portfolio Creative', description: 'Stunning gallery for artists', icon: 'fa-paintbrush', tags: ['creative', 'gallery'], category: 'portfolio', popular: true },
-        { id: 'portfolio-minimal', name: 'Portfolio Minimal', description: 'Clean minimalist portfolio', icon: 'fa-image', tags: ['minimal', 'clean'], category: 'portfolio' }
-    ];
-
-    // ==================== INITIALIZATION ====================
-    window.onload = function() {
-        loadTemplates();
-        checkSession();
-        updateStats();
-    };
-
-    function saveData() {
-        localStorage.setItem('websites', JSON.stringify(websites));
-        localStorage.setItem('users', JSON.stringify(users));
+  // AUTH CHECK
+  auth.onAuthStateChanged(user => {
+    if(user){
+      document.getElementById('main-content').style.display = 'block';
+    } else {
+      // redirect to login page or show modal
+      document.getElementById('main-content').innerHTML = '<p>Please log in to continue.</p>';
     }
+  });
 
-    // ==================== SESSION MANAGEMENT ====================
-    function checkSession() {
-        const session = localStorage.getItem('session');
-        if (session === 'admin') {
-            isAuthenticated = true;
-            showDashboard();
-        } else if (session) {
-            const user = users.find(u => u.email === session);
-            if (user) {
-                currentUser = user;
-                showClientDashboard(user);
-            }
-        }
-    }
+  document.getElementById('logout-btn').addEventListener('click', ()=>{
+    auth.signOut();
+  });
 
-    // ==================== LOGIN / AUTH ====================
-    function login() {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const recaptcha = document.getElementById('recaptcha').checked;
+  // DARK MODE TOGGLE
+  const toggleDark = document.getElementById('toggle-dark');
+  toggleDark.addEventListener('click', ()=>{
+    document.body.classList.toggle('dark');
+  });
 
-        if (!recaptcha) {
-            showNotification('Please verify you are human', 'error');
-            return;
-        }
+  // ONBOARDING MODAL
+  const onboardingModal = document.getElementById('onboarding-modal');
+  const closeOnboarding = document.getElementById('close-onboarding');
+  onboardingModal.classList.add('active');
 
-        if (email === 'admin' && password === 'admin123') {
-            isAuthenticated = true;
-            localStorage.setItem('session', 'admin');
-            showDashboard();
-            showNotification('Welcome back, Master Creator!', 'success');
-            updateStats();
-        } else {
-            const user = users.find(u => u.email === email);
-            if (user) {
-                currentUser = user;
-                localStorage.setItem('session', email);
-                showClientDashboard(user);
-                showNotification(`Welcome back, ${email}!`, 'success');
-            } else {
-                showNotification('Invalid credentials', 'error');
-            }
-        }
-    }
+  closeOnboarding.addEventListener('click', ()=>{
+    onboardingModal.classList.remove('active');
+  });
 
-    function onGoogleSignIn(googleUser) {
-        const profile = googleUser.getBasicProfile();
-        const email = profile.getEmail();
-        const name = profile.getName();
-        
-        let user = users.find(u => u.email === email);
-        if (!user) {
-            user = {
-                id: 'user_' + Date.now(),
-                email: email,
-                name: name,
-                plan: 'basic',
-                websites: []
-            };
-            users.push(user);
-            saveData();
-        }
-        
-        currentUser = user;
-        localStorage.setItem('session', email);
-        showClientDashboard(user);
-        showNotification(`Welcome, ${name}!`, 'success');
-    }
+  document.getElementById('next-step1').addEventListener('click', ()=>{
+    document.getElementById('step1').classList.remove('active');
+    document.getElementById('step2').classList.add('active');
+  });
+  document.getElementById('next-step2').addEventListener('click', ()=>{
+    document.getElementById('step2').classList.remove('active');
+    document.getElementById('step3').classList.add('active');
+  });
+  document.getElementById('finish-onboarding').addEventListener('click', ()=>{
+    onboardingModal.classList.remove('active');
+  });
 
-    function logout() {
-        isAuthenticated = false;
-        currentUser = null;
-        localStorage.removeItem('session');
-        document.getElementById('hero-section').style.display = 'flex';
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('main-dashboard').style.display = 'none';
-        document.getElementById('client-dashboard').style.display = 'none';
-        showNotification('Logged out successfully', 'info');
-    }
+  // LOAD WEBSITES PLACEHOLDER
+  const websiteList = document.getElementById('website-list');
+  db.collection('websites').get().then(snapshot=>{
+    websiteList.innerHTML='';
+    snapshot.forEach(doc=>{
+      const li = document.createElement('li');
+      li.textContent = doc.data().name;
+      websiteList.appendChild(li);
+    });
+  });
+</script>
 
-    // ==================== NAVIGATION ====================
-    function showLogin() {
-        document.getElementById('hero-section').style.display = 'none';
-        document.getElementById('login-screen').style.display = 'flex';
-    }
-
-    function showDashboard() {
-        document.getElementById('hero-section').style.display = 'none';
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('main-dashboard').style.display = 'block';
-        updateStats();
-        loadWebsitesTable();
-    }
-
-    function showClientDashboard(user) {
-        document.getElementById('hero-section').style.display = 'none';
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('main-dashboard').style.display = 'none';
-        document.getElementById('client-dashboard').style.display = 'block';
-        
-        document.getElementById('client-name').textContent = `Welcome, ${user.name || user.email}!`;
-        document.getElementById('client-plan').textContent = user.plan === 'business' ? 'Business Plan' : 'Basic Plan';
-        
-        const userWebsites = websites.filter(w => w.client === user.email);
-        document.getElementById('client-websites').textContent = userWebsites.length;
-        
-        loadClientWebsites(userWebsites);
-    }
-
-    function loadClientWebsites(userWebsites) {
-        const container = document.getElementById('client-websites-list');
-        if (userWebsites.length === 0) {
-            container.innerHTML = '<p style="color: var(--gray-500);">No websites yet.</p>';
-            return;
-        }
-        
-        container.innerHTML = userWebsites.map(site => `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--gray-50); border-radius: var(--radius-lg); margin-bottom: 1rem;">
-                <div>
-                    <h4 style="font-weight: 600;">${site.name}</h4>
-                    <p style="color: var(--gray-500);">Status: ${site.status}</p>
-                </div>
-                <button onclick="viewWebsite('${site.id}')" style="padding: 0.5rem 1rem; background: var(--primary); color: white; border: none; border-radius: var(--radius-md); cursor: pointer;">View</button>
-            </div>
-        `).join('');
-    }
-
-    function showDashboardSection(section) {
-        showNotification(`Loading ${section}...`, 'info');
-    }
-
-    // ==================== STATS & ANALYTICS ====================
-    function updateStats() {
-        document.getElementById('total-sites').textContent = websites.length;
-        document.getElementById('active-clients').textContent = users.length;
-        document.getElementById('stat-total').textContent = websites.length;
-        document.getElementById('stat-active').textContent = websites.filter(w => w.status === 'active').length;
-        document.getElementById('stat-clients').textContent = users.length;
-        
-        const totalRevenue = websites.reduce((sum, w) => sum + (w.price || 0), 0);
-        document.getElementById('stat-revenue').textContent = `R${totalRevenue}`;
-        document.getElementById('monthly-revenue').textContent = `R${totalRevenue}`;
-    }
-            // ==================== TEMPLATES ====================
-        function loadTemplates() {
-            const container = document.getElementById('templates-container');
-            if (!container) return;
-            
-            container.innerHTML = templates.map(template => `
-                <div class="template-card" onclick="createWebsite('${template.id}')" style="background: white; border-radius: var(--radius-xl); overflow: hidden; cursor: pointer; border: 1px solid var(--gray-200);">
-                    <div style="height: 160px; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white; position: relative;">
-                        <i class="fas ${template.icon}"></i>
-                        ${template.popular ? '<span style="position: absolute; top: 0.75rem; right: 0.75rem; background: white; color: var(--primary); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.7rem; font-weight: 600;">POPULAR</span>' : ''}
-                    </div>
-                    <div style="padding: 1.5rem;">
-                        <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">${template.name}</h3>
-                        <p style="color: var(--gray-500); font-size: 0.9rem; margin-bottom: 1rem;">${template.description}</p>
-                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            ${template.tags.map(tag => `<span style="background: var(--gray-100); color: var(--gray-600); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.7rem;">${tag}</span>`).join('')}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function filterTemplates(category) {
-            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            showNotification(`Showing ${category} templates`, 'info');
-        }
-
-        function showAllTemplates() {
-            showNotification('All templates loaded', 'success');
-        }
-
-        // ==================== WEBSITE MANAGEMENT ====================
-        function createWebsite(templateId) {
-            const template = templates.find(t => t.id === templateId);
-            const newSite = {
-                id: 'site_' + Date.now(),
-                name: `New ${template.name}`,
-                type: template.category,
-                status: 'draft',
-                client: null,
-                price: 0,
-                content: [],
-                createdAt: new Date().toISOString()
-            };
-            
-            websites.push(newSite);
-            saveData();
-            updateStats();
-            loadWebsitesTable();
-            
-            currentWebsite = newSite;
-            document.getElementById('builder-title').textContent = `Building: ${newSite.name}`;
-            document.getElementById('builder-screen').style.display = 'block';
-            document.getElementById('main-dashboard').style.display = 'none';
-            
-            showNotification(`Created ${template.name}!`, 'success');
-        }
-
-        function createNewSite() {
-            createWebsite('corporate-basic');
-        }
-
-        function loadWebsitesTable() {
-            const tbody = document.getElementById('websites-table');
-            if (!tbody) return;
-            
-            if (websites.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 3rem; color: var(--gray-500);"><i class="fas fa-folder-open" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>No websites yet. Click "New Website" to start!</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = websites.map(site => `
-                <tr>
-                    <td style="padding: 1rem;">${site.name}</td>
-                    <td style="padding: 1rem;"><span style="background: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: var(--radius-full);">${site.type}</span></td>
-                    <td style="padding: 1rem;"><span style="background: ${site.status === 'active' ? '#d1fae5' : '#fef3c7'}; color: ${site.status === 'active' ? '#065f46' : '#92400e'}; padding: 0.25rem 0.75rem; border-radius: var(--radius-full);">${site.status}</span></td>
-                    <td style="padding: 1rem;">${site.client || '-'}</td>
-                    <td style="padding: 1rem;">R${site.price}</td>
-                    <td style="padding: 1rem;">
-                        <button onclick="editWebsite('${site.id}')" style="padding: 0.4rem 0.75rem; background: var(--gray-100); border: none; border-radius: var(--radius-sm); margin-right: 0.5rem; cursor: pointer;"><i class="fas fa-edit"></i></button>
-                        <button onclick="openTransferModal('${site.id}')" style="padding: 0.4rem 0.75rem; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); cursor: pointer;"><i class="fas fa-exchange-alt"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function editWebsite(id) {
-            const site = websites.find(w => w.id === id);
-            if (site) {
-                currentWebsite = site;
-                document.getElementById('builder-title').textContent = `Building: ${site.name}`;
-                document.getElementById('builder-screen').style.display = 'block';
-                document.getElementById('main-dashboard').style.display = 'none';
-            }
-        }
-
-        function viewWebsite(id) {
-            showNotification('Opening website...', 'info');
-        }
-
-        // ==================== WEBSITE BUILDER ====================
-        function allowDrop(ev) {
-            ev.preventDefault();
-        }
-
-        function drag(ev) {
-            ev.dataTransfer.setData('text', ev.target.dataset.element);
-        }
-
-        function drop(ev) {
-            ev.preventDefault();
-            const elementType = ev.dataTransfer.getData('text');
-            addElementToCanvas(elementType);
-        }
-
-        function addElementToCanvas(type) {
-            const preview = document.getElementById('website-preview');
-            const element = document.createElement('div');
-            
-            const elements = {
-                header: '<header style="background: white; padding: 1rem; border-bottom: 1px solid #eee;"><h2>Header Section</h2></header>',
-                hero: '<section style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; padding: 4rem; text-align: center;"><h1 style="font-size: 2.5rem;">Hero Section</h1><p>Add your compelling headline here</p></section>',
-                features: '<section style="padding: 2rem;"><h2 style="text-align: center;">Features</h2><div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 2rem;"><div><h3>Feature 1</h3><p>Description</p></div><div><h3>Feature 2</h3><p>Description</p></div><div><h3>Feature 3</h3><p>Description</p></div></div></section>',
-                products: '<section style="padding: 2rem;"><h2>Products</h2><div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem;"><div style="border: 1px solid #eee; padding: 1rem;"><h3>Product</h3><p>R199</p></div><div style="border: 1px solid #eee; padding: 1rem;"><h3>Product</h3><p>R299</p></div></div></section>',
-                about: '<section style="padding: 2rem;"><h2>About Us</h2><p>Your about text here.</p></section>',
-                contact: '<section style="padding: 2rem;"><h2>Contact Us</h2><form><input type="text" placeholder="Name" style="display: block; width: 100%; margin-bottom: 1rem; padding: 0.5rem;"><input type="email" placeholder="Email" style="display: block; width: 100%; margin-bottom: 1rem; padding: 0.5rem;"><textarea placeholder="Message" style="display: block; width: 100%; margin-bottom: 1rem; padding: 0.5rem;"></textarea><button style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem;">Send</button></form></section>',
-                footer: '<footer style="background: #333; color: white; padding: 2rem; text-align: center;">© 2024 Your Company. All rights reserved.</footer>'
-            };
-            
-            element.innerHTML = elements[type] || '<div>Element added</div>';
-            preview.appendChild(element);
-            
-            if (currentWebsite) {
-                currentWebsite.content.push({ type, content: element.innerHTML });
-            }
-        }
-
-        function saveWebsite() {
-            if (currentWebsite) {
-                currentWebsite.lastSaved = new Date().toISOString();
-                const index = websites.findIndex(w => w.id === currentWebsite.id);
-                if (index !== -1) websites[index] = currentWebsite;
-                saveData();
-                showNotification('Website saved!', 'success');
-            }
-        }
-
-        function previewWebsite() {
-            const preview = document.getElementById('website-preview');
-            const previewWindow = window.open('', '_blank');
-            previewWindow.document.write(`
-                <html><head><title>Preview</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></head>
-                <body>${preview.innerHTML}</body>
-                </html>
-            `);
-        }
-
-        function publishWebsite() {
-            if (currentWebsite) {
-                currentWebsite.status = 'active';
-                saveWebsite();
-                showNotification('Website published!', 'success');
-            }
-        }
-
-        function closeBuilder() {
-            document.getElementById('builder-screen').style.display = 'none';
-            document.getElementById('main-dashboard').style.display = 'block';
-            loadWebsitesTable();
-        }
-
-        function processAIRequest() {
-            const request = document.getElementById('ai-request').value;
-            if (request.toLowerCase().includes('hero')) addElementToCanvas('hero');
-            else if (request.toLowerCase().includes('feature')) addElementToCanvas('features');
-            else if (request.toLowerCase().includes('product')) addElementToCanvas('products');
-            else if (request.toLowerCase().includes('contact')) addElementToCanvas('contact');
-            else showNotification('Try: "Add hero section"', 'info');
-            document.getElementById('ai-request').value = '';
-        }
-
-        // ==================== TRANSFER SYSTEM ====================
-        function openTransferModal(siteId) {
-            currentWebsite = websites.find(w => w.id === siteId);
-            document.getElementById('transfer-modal').style.display = 'flex';
-        }
-
-        function completeTransfer() {
-            const email = document.getElementById('transfer-email').value;
-            const level = document.getElementById('transfer-level').value;
-            
-            if (!email) {
-                showNotification('Please enter client email', 'error');
-                return;
-            }
-            
-            let user = users.find(u => u.email === email);
-            if (!user) {
-                user = { id: 'user_' + Date.now(), email: email, websites: [] };
-                users.push(user);
-            }
-            
-            if (currentWebsite) {
-                currentWebsite.client = email;
-                currentWebsite.accessLevel = level;
-                currentWebsite.status = 'transferred';
-                saveData();
-                updateStats();
-                loadWebsitesTable();
-                showNotification(`Transferred to ${email}`, 'success');
-            }
-            
-            closeModal();
-        }
-
-        function closeModal() {
-            document.getElementById('transfer-modal').style.display = 'none';
-        }
-
-        // ==================== MISC FUNCTIONS ====================
-        function showNotification(message, type = 'info') {
-            const container = document.getElementById('notification-container');
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                background: white; border-radius: var(--radius-lg); padding: 1rem 1.5rem; margin-bottom: 0.5rem;
-                box-shadow: var(--shadow-xl); display: flex; align-items: center; gap: 1rem;
-                animation: slideIn 0.3s ease; border-left: 4px solid ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
-            `;
-            
-            const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
-            const color = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6';
-            
-            notification.innerHTML = `<i class="fas ${icon}" style="color: ${color};"></i><span>${message}</span>`;
-            container.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideIn 0.3s reverse';
-                setTimeout(() => container.removeChild(notification), 300);
-            }, 3000);
-        }
-
-        function toggleRecaptcha() {
-            const checkbox = document.getElementById('recaptcha');
-            checkbox.checked = !checkbox.checked;
-        }
-
-        function showSignup() {
-            showNotification('Sign up feature coming soon! Use admin/admin123 for now.', 'info');
-        }
-
-        function selectPlan(plan) {
-            const prices = { basic: 2500, business: 5000, enterprise: 10000 };
-            showNotification(`Selected ${plan} plan - R${prices[plan]}`, 'success');
-        }
-
-        function showFeatures() { showNotification('Features section', 'info'); }
-        function showTemplates() { showNotification('All templates', 'info'); }
-        function showPricing() { showNotification('Pricing plans', 'info'); }
-        function showHelp() { showNotification('Help center', 'info'); }
-        function showGuides() { showNotification('Guides', 'info'); }
-        function showContact() { showNotification('Contact page', 'info'); }
-        function showUserMenu() { showNotification('User menu', 'info'); }
-        function updateAnalyticsPeriod() { showNotification('Analytics updated', 'success'); }
-    </script>
 </body>
 </html>
+<!-- PART 2: Website Builder -->
+<div class="modal" id="builder-modal">
+  <div class="modal-content">
+    <button class="close" id="close-builder">&times;</button>
+    <h2>Website Builder</h2>
+    <div style="display:flex; gap:1rem;">
+      <div style="flex:1;">
+        <h3>Templates</h3>
+        <div id="template-list" style="display:flex; flex-direction:column; gap:.5rem;">
+          <button class="btn template-btn" data-template="landing">Landing Page</button>
+          <button class="btn template-btn" data-template="portfolio">Portfolio</button>
+          <button class="btn template-btn" data-template="store">Online Store</button>
+        </div>
+      </div>
+      <div style="flex:2;">
+        <h3>Preview</h3>
+        <iframe id="preview-frame" style="width:100%; height:400px; border:1px solid #ddd; border-radius:10px;"></iframe>
+      </div>
+    </div>
+    <button class="btn" id="export-website" style="margin-top:1rem;">Export Website</button>
+  </div>
+</div>
+
+<script>
+  const builderModal = document.getElementById('builder-modal');
+  const closeBuilder = document.getElementById('close-builder');
+  document.getElementById('nav-builder').addEventListener('click', ()=>{
+    builderModal.classList.add('active');
+  });
+  closeBuilder.addEventListener('click', ()=>builderModal.classList.remove('active'));
+
+  // Templates
+  const templates = {
+    landing: `
+      <html><head><title>Landing Page</title>
+      <style>
+        body{font-family:Inter,sans-serif;background:#f0f8ff;margin:0;}
+        header{background:#0070f3;color:#fff;padding:2rem;text-align:center;}
+        section{padding:2rem;text-align:center;}
+        button{padding:.5rem 1rem;background:#0070f3;color:#fff;border:none;border-radius:5px;}
+      </style>
+      </head>
+      <body>
+        <header><h1>Welcome to My Landing Page</h1></header>
+        <section><p>This is a drag & drop template!</p><button>Get Started</button></section>
+      </body></html>
+    `,
+    portfolio: `
+      <html><head><title>Portfolio</title>
+      <style>
+        body{font-family:Inter,sans-serif;background:#fefefe;margin:0;padding:0;}
+        header{background:#333;color:#fff;text-align:center;padding:2rem;}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;padding:2rem;}
+        .grid div{background:#0070f3;color:#fff;padding:2rem;text-align:center;border-radius:10px;}
+      </style>
+      </head>
+      <body>
+        <header><h1>My Portfolio</h1></header>
+        <div class="grid">
+          <div>Project 1</div>
+          <div>Project 2</div>
+          <div>Project 3</div>
+          <div>Project 4</div>
+        </div>
+      </body></html>
+    `,
+    store: `
+      <html><head><title>Store</title>
+      <style>
+        body{font-family:Inter,sans-serif;background:#fff;margin:0;padding:0;}
+        header{background:#ff5722;color:#fff;text-align:center;padding:2rem;}
+        .products{display:flex;flex-wrap:wrap;gap:1rem;padding:2rem;}
+        .product{border:1px solid #ddd;padding:1rem;border-radius:10px;width:calc(33% - 1rem);}
+        button{background:#ff5722;color:#fff;border:none;padding:.5rem 1rem;border-radius:5px;}
+      </style>
+      </head>
+      <body>
+        <header><h1>My Online Store</h1></header>
+        <div class="products">
+          <div class="product"><h3>Product 1</h3><button>Buy</button></div>
+          <div class="product"><h3>Product 2</h3><button>Buy</button></div>
+          <div class="product"><h3>Product 3</h3><button>Buy</button></div>
+        </div>
+      </body></html>
+    `
+  };
+
+  const previewFrame = document.getElementById('preview-frame');
+  document.querySelectorAll('.template-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const templateName = btn.getAttribute('data-template');
+      previewFrame.srcdoc = templates[templateName];
+    });
+  });
+
+  // Export Website as HTML
+  document.getElementById('export-website').addEventListener('click', ()=>{
+    const htmlContent = previewFrame.srcdoc;
+    const blob = new Blob([htmlContent], {type:'text/html'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'website.html';
+    a.click();
+  });
+</script>
+<!-- PART 3: Marketplace & Creator Subscriptions -->
+<div class="modal" id="marketplace-modal">
+  <div class="modal-content">
+    <button class="close" id="close-marketplace">&times;</button>
+    <h2>Marketplace</h2>
+    <p>Buy templates, websites, and tools from other creators or subscribe to use our platform.</p>
+
+    <div class="subscriptions" style="display:flex; gap:1rem; flex-wrap:wrap;">
+      <div class="plan" style="border:1px solid #ddd; padding:1rem; border-radius:10px; flex:1; min-width:200px;">
+        <h3>Basic</h3>
+        <p>$10 / month</p>
+        <ul>
+          <li>Access to templates</li>
+          <li>Basic builder features</li>
+        </ul>
+        <button class="subscribe-btn" data-plan="basic">Subscribe</button>
+      </div>
+      <div class="plan" style="border:1px solid #ddd; padding:1rem; border-radius:10px; flex:1; min-width:200px;">
+        <h3>Pro</h3>
+        <p>$30 / month</p>
+        <ul>
+          <li>Advanced templates</li>
+          <li>Full builder access</li>
+          <li>Marketplace selling</li>
+        </ul>
+        <button class="subscribe-btn" data-plan="pro">Subscribe</button>
+      </div>
+      <div class="plan" style="border:1px solid #ddd; padding:1rem; border-radius:10px; flex:1; min-width:200px;">
+        <h3>Enterprise</h3>
+        <p>$99 / month</p>
+        <ul>
+          <li>Unlimited websites</li>
+          <li>Priority support</li>
+          <li>Custom integrations</li>
+        </ul>
+        <button class="subscribe-btn" data-plan="enterprise">Subscribe</button>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2rem;">Creator Marketplace</h3>
+    <div class="creator-products" style="display:flex; flex-wrap:wrap; gap:1rem;">
+      <div class="creator-product" style="border:1px solid #ddd; padding:1rem; border-radius:10px; width:calc(33% - 1rem);">
+        <h4>Pro Landing Template</h4>
+        <p>$15</p>
+        <button class="buy-btn">Buy</button>
+      </div>
+      <div class="creator-product" style="border:1px solid #ddd; padding:1rem; border-radius:10px; width:calc(33% - 1rem);">
+        <h4>Portfolio Kit</h4>
+        <p>$20</p>
+        <button class="buy-btn">Buy</button>
+      </div>
+      <div class="creator-product" style="border:1px solid #ddd; padding:1rem; border-radius:10px; width:calc(33% - 1rem);">
+        <h4>Online Store Template</h4>
+        <p>$25</p>
+        <button class="buy-btn">Buy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const marketplaceModal = document.getElementById('marketplace-modal');
+  const closeMarketplace = document.getElementById('close-marketplace');
+  document.getElementById('nav-marketplace').addEventListener('click', ()=>{
+    marketplaceModal.classList.add('active');
+  });
+  closeMarketplace.addEventListener('click', ()=>marketplaceModal.classList.remove('active'));
+
+  // Subscription Handling (Dummy - replace with Stripe or API)
+  document.querySelectorAll('.subscribe-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const plan = btn.getAttribute('data-plan');
+      alert(`Subscribed to ${plan.toUpperCase()} plan! Payment integration required.`);
+    });
+  });
+
+  // Marketplace Buy Buttons
+  document.querySelectorAll('.buy-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const product = btn.parentElement.querySelector('h4').innerText;
+      alert(`Purchased "${product}"! Payment integration required.`);
+    });
+  });
+</script>
+<!-- PART 4: Client & Creator Dashboards, Analytics -->
+<div class="modal" id="dashboard-modal">
+  <div class="modal-content">
+    <button class="close" id="close-dashboard">&times;</button>
+    <h2>Dashboard</h2>
+    <div class="dashboard-tabs" style="display:flex; gap:1rem; margin-bottom:1rem;">
+      <button class="tab-btn" data-tab="overview">Overview</button>
+      <button class="tab-btn" data-tab="clients">Clients</button>
+      <button class="tab-btn" data-tab="creators">Creators</button>
+      <button class="tab-btn" data-tab="analytics">Analytics</button>
+      <button class="tab-btn" data-tab="products">Products</button>
+    </div>
+
+    <div class="tab-content" id="overview-tab">
+      <h3>Welcome, Creator!</h3>
+      <p>Your total clients: <span id="total-clients">0</span></p>
+      <p>Your total earnings: $<span id="total-earnings">0</span></p>
+      <p>Active subscriptions: <span id="active-subs">0</span></p>
+    </div>
+
+    <div class="tab-content" id="clients-tab" style="display:none;">
+      <h3>Your Clients</h3>
+      <table style="width:100%; border-collapse: collapse;">
+        <thead>
+          <tr><th>Name</th><th>Email</th><th>Subscribed Plan</th><th>Status</th></tr>
+        </thead>
+        <tbody id="clients-table">
+          <tr><td>Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab-content" id="creators-tab" style="display:none;">
+      <h3>Marketplace Creators</h3>
+      <table style="width:100%; border-collapse: collapse;">
+        <thead>
+          <tr><th>Creator Name</th><th>Email</th><th>Products</th><th>Revenue</th></tr>
+        </thead>
+        <tbody id="creators-table">
+          <tr><td>Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab-content" id="analytics-tab" style="display:none;">
+      <h3>Analytics</h3>
+      <canvas id="revenueChart" width="400" height="200"></canvas>
+      <canvas id="clientsChart" width="400" height="200"></canvas>
+    </div>
+
+    <div class="tab-content" id="products-tab" style="display:none;">
+      <h3>Your Products</h3>
+      <div class="creator-products" style="display:flex; flex-wrap:wrap; gap:1rem;">
+        <div class="creator-product" style="border:1px solid #ddd; padding:1rem; border-radius:10px; width:calc(33% - 1rem);">
+          <h4>Sample Template</h4>
+          <p>$10</p>
+          <button class="edit-product">Edit</button>
+        </div>
+      </div>
+      <button id="add-product" style="margin-top:1rem;">Add New Product</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const dashboardModal = document.getElementById('dashboard-modal');
+  const closeDashboard = document.getElementById('close-dashboard');
+  document.getElementById('nav-dashboard').addEventListener('click', ()=>{
+    dashboardModal.classList.add('active');
+    loadDashboardData();
+  });
+  closeDashboard.addEventListener('click', ()=>dashboardModal.classList.remove('active'));
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab-content').forEach(tc=>tc.style.display='none');
+      document.getElementById(`${btn.getAttribute('data-tab')}-tab`).style.display='block';
+    });
+  });
+
+  // Dummy Dashboard Data
+  function loadDashboardData() {
+    document.getElementById('total-clients').innerText = 12;
+    document.getElementById('total-earnings').innerText = 4820;
+    document.getElementById('active-subs').innerText = 7;
+
+    const clientsTable = document.getElementById('clients-table');
+    clientsTable.innerHTML = `
+      <tr><td>Acme Corp</td><td>acme@example.com</td><td>Pro</td><td>Active</td></tr>
+      <tr><td>Beta LLC</td><td>beta@example.com</td><td>Basic</td><td>Inactive</td></tr>
+    `;
+
+    const creatorsTable = document.getElementById('creators-table');
+    creatorsTable.innerHTML = `
+      <tr><td>John Doe</td><td>john@example.com</td><td>5</td><td>$120</td></tr>
+      <tr><td>Jane Smith</td><td>jane@example.com</td><td>3</td><td>$80</td></tr>
+    `;
+
+    // Charts
+    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    new Chart(revenueCtx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [{
+          label: 'Revenue',
+          data: [500, 1200, 800, 1400, 1100],
+          borderColor: 'rgba(75,192,192,1)',
+          fill: false
+        }]
+      }
+    });
+
+    const clientsCtx = document.getElementById('clientsChart').getContext('2d');
+    new Chart(clientsCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Acme Corp', 'Beta LLC', 'Gamma Inc', 'Delta Co'],
+        datasets: [{
+          label: 'Active Clients',
+          data: [3,1,2,4],
+          backgroundColor: 'rgba(153,102,255,0.6)'
+        }]
+      }
+    });
+  }
+
+  // Add Product
+  document.getElementById('add-product').addEventListener('click', ()=>{
+    alert('Open product builder to add new product (template, tool, etc.)');
+  });
+</script>
+<!-- PART 5: Website Builder with Drag & Drop -->
+<div class="modal" id="builder-modal">
+  <div class="modal-content" style="width:90%; height:90%; overflow:auto;">
+    <button class="close" id="close-builder">&times;</button>
+    <h2>Website Builder</h2>
+    <div style="display:flex; gap:1rem; height:80%;">
+      
+      <!-- Left: Elements Panel -->
+      <div style="flex:1; border-right:1px solid #ccc; padding:1rem; overflow-y:auto;">
+        <h3>Elements</h3>
+        <div class="draggable-element" draggable="true" data-type="text" style="border:1px solid #aaa; padding:0.5rem; margin-bottom:0.5rem; cursor:grab;">Text Block</div>
+        <div class="draggable-element" draggable="true" data-type="image" style="border:1px solid #aaa; padding:0.5rem; margin-bottom:0.5rem; cursor:grab;">Image</div>
+        <div class="draggable-element" draggable="true" data-type="button" style="border:1px solid #aaa; padding:0.5rem; margin-bottom:0.5rem; cursor:grab;">Button</div>
+        <div class="draggable-element" draggable="true" data-type="video" style="border:1px solid #aaa; padding:0.5rem; margin-bottom:0.5rem; cursor:grab;">Video</div>
+      </div>
+
+      <!-- Center: Canvas -->
+      <div id="builder-canvas" style="flex:3; border:1px solid #000; padding:1rem; min-height:500px; background:#f9f9f9;">
+        <h4>Drag elements here</h4>
+      </div>
+
+      <!-- Right: Properties Panel -->
+      <div id="properties-panel" style="flex:1; border-left:1px solid #ccc; padding:1rem; overflow-y:auto;">
+        <h3>Properties</h3>
+        <p>Select an element to edit its properties</p>
+      </div>
+    </div>
+
+    <button id="preview-site" style="margin-top:1rem;">Live Preview</button>
+    <button id="save-site" style="margin-top:1rem;">Save Website</button>
+  </div>
+</div>
+
+<script>
+  const builderModal = document.getElementById('builder-modal');
+  const closeBuilder = document.getElementById('close-builder');
+  document.getElementById('nav-builder').addEventListener('click', ()=>{
+    builderModal.classList.add('active');
+  });
+  closeBuilder.addEventListener('click', ()=>builderModal.classList.remove('active'));
+
+  // Drag & Drop
+  const draggables = document.querySelectorAll('.draggable-element');
+  const canvas = document.getElementById('builder-canvas');
+
+  draggables.forEach(elem=>{
+    elem.addEventListener('dragstart', (e)=>{
+      e.dataTransfer.setData('type', elem.getAttribute('data-type'));
+    });
+  });
+
+  canvas.addEventListener('dragover', e=>e.preventDefault());
+  canvas.addEventListener('drop', e=>{
+    const type = e.dataTransfer.getData('type');
+    let el;
+    if(type==='text') el = document.createElement('div'), el.innerText='Text Block', el.contentEditable=true;
+    if(type==='image') el = document.createElement('img'), el.src='https://via.placeholder.com/150';
+    if(type==='button') el = document.createElement('button'), el.innerText='Click Me';
+    if(type==='video') el = document.createElement('video'), el.src='https://www.w3schools.com/html/mov_bbb.mp4', el.controls=true, el.width=200;
+
+    el.style.border='1px dashed #888';
+    el.style.padding='0.5rem';
+    el.style.margin='0.5rem 0';
+    el.classList.add('canvas-element');
+    canvas.appendChild(el);
+
+    // Click to edit properties
+    el.addEventListener('click', ()=>{
+      const panel = document.getElementById('properties-panel');
+      panel.innerHTML = `<h3>Properties</h3>
+        <label>Content:</label>
+        <input type="text" id="prop-content" value="${el.innerText || ''}" style="width:100%;"/>
+        <button id="update-prop">Update</button>`;
+      document.getElementById('update-prop').addEventListener('click', ()=>{
+        if(el.tagName==='DIV') el.innerText = document.getElementById('prop-content').value;
+        if(el.tagName==='BUTTON') el.innerText = document.getElementById('prop-content').value;
+      });
+    });
+  });
+
+  // Live Preview
+  document.getElementById('preview-site').addEventListener('click', ()=>{
+    const previewWindow = window.open('', '_blank');
+    previewWindow.document.write('<html><head><title>Live Preview</title></head><body>');
+    previewWindow.document.write(canvas.innerHTML);
+    previewWindow.document.write('</body></html>');
+  });
+
+  // Save Website (simulate)
+  document.getElementById('save-site').addEventListener('click', ()=>{
+    alert('Website saved successfully! (This would save to DB in real implementation)');
+  });
+</script>
+<!-- PART 6: Payments & Subscriptions -->
+<div class="modal" id="payments-modal">
+  <div class="modal-content" style="width:50%; padding:2rem;">
+    <button class="close" id="close-payments">&times;</button>
+    <h2>Manage Payments & Subscriptions</h2>
+
+    <!-- Subscription Plans -->
+    <div id="plans" style="display:flex; gap:1rem; margin-bottom:2rem;">
+      <div class="plan" data-price="10" style="border:1px solid #ccc; padding:1rem; flex:1; text-align:center; cursor:pointer;">
+        <h3>Starter</h3>
+        <p>$10 / month</p>
+        <button class="subscribe-btn">Subscribe</button>
+      </div>
+      <div class="plan" data-price="25" style="border:1px solid #ccc; padding:1rem; flex:1; text-align:center; cursor:pointer;">
+        <h3>Pro</h3>
+        <p>$25 / month</p>
+        <button class="subscribe-btn">Subscribe</button>
+      </div>
+      <div class="plan" data-price="50" style="border:1px solid #ccc; padding:1rem; flex:1; text-align:center; cursor:pointer;">
+        <h3>Agency</h3>
+        <p>$50 / month</p>
+        <button class="subscribe-btn">Subscribe</button>
+      </div>
+    </div>
+
+    <!-- One-time Payment -->
+    <h3>One-time Payments</h3>
+    <input type="number" id="one-time-amount" placeholder="Enter amount" style="width:80%; padding:0.5rem;"/>
+    <button id="pay-one-time" style="padding:0.5rem;">Pay Now</button>
+  </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const stripe = Stripe('pk_test_1234567890abcdef'); // Replace with your Stripe public key
+
+  const paymentsModal = document.getElementById('payments-modal');
+  const closePayments = document.getElementById('close-payments');
+  document.getElementById('nav-payments').addEventListener('click', ()=>{
+    paymentsModal.classList.add('active');
+  });
+  closePayments.addEventListener('click', ()=>paymentsModal.classList.remove('active'));
+
+  // Subscription Buttons
+  document.querySelectorAll('.subscribe-btn').forEach(btn=>{
+    btn.addEventListener('click', async (e)=>{
+      const price = e.target.closest('.plan').getAttribute('data-price');
+      alert(`Subscribed to $${price} plan! (In real implementation, integrate Stripe Checkout or Customer Portal)`);
+    });
+  });
+
+  // One-time payment simulation
+  document.getElementById('pay-one-time').addEventListener('click', async ()=>{
+    const amount = document.getElementById('one-time-amount').value;
+    if(!amount || amount<=0){ alert('Enter valid amount'); return; }
+    alert(`Paid $${amount} successfully! (In real implementation, call Stripe API)`);
+  });
+
+  // Example Stripe Checkout integration (simplified)
+  async function createStripeSession(price){
+    // Here you would call your backend endpoint to create a Stripe session
+    console.log('Creating Stripe session for $'+price);
+  }
+</script>
+<!-- PART 7: Analytics Dashboard & Admin Panel -->
+<div id="admin-panel" style="display:none; padding:2rem; background:#f8f9fa;">
+  <h2>Admin Dashboard</h2>
+
+  <!-- User Management -->
+  <section style="margin-bottom:2rem;">
+    <h3>Manage Users</h3>
+    <table id="users-table" border="1" style="width:100%; border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamically populated -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Analytics -->
+  <section>
+    <h3>Site Analytics</h3>
+    <div id="analytics-charts" style="display:flex; gap:2rem;">
+      <canvas id="visitorsChart" width="400" height="200"></canvas>
+      <canvas id="salesChart" width="400" height="200"></canvas>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Simulated user data
+  const users = [
+    {id:1, name:"Alice", email:"alice@example.com", role:"creator", status:"active"},
+    {id:2, name:"Bob", email:"bob@example.com", role:"client", status:"active"},
+    {id:3, name:"Charlie", email:"charlie@example.com", role:"creator", status:"suspended"},
+  ];
+
+  function renderUsers(){
+    const tbody = document.querySelector('#users-table tbody');
+    tbody.innerHTML = '';
+    users.forEach(u=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${u.id}</td>
+        <td>${u.name}</td>
+        <td>${u.email}</td>
+        <td>${u.role}</td>
+        <td>${u.status}</td>
+        <td>
+          <button onclick="toggleStatus(${u.id})">Toggle Status</button>
+          <button onclick="deleteUser(${u.id})">Delete</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function toggleStatus(id){
+    const user = users.find(u=>u.id===id);
+    user.status = (user.status==="active") ? "suspended":"active";
+    renderUsers();
+  }
+
+  function deleteUser(id){
+    const idx = users.findIndex(u=>u.id===id);
+    if(idx>=0){ users.splice(idx,1); renderUsers(); }
+  }
+
+  renderUsers();
+
+  // Analytics charts
+  const ctx1 = document.getElementById('visitorsChart').getContext('2d');
+  const visitorsChart = new Chart(ctx1, {
+    type:'line',
+    data:{
+      labels:['Jan','Feb','Mar','Apr','May','Jun'],
+      datasets:[{
+        label:'Website Visitors',
+        data:[120, 150, 180, 200, 250, 300],
+        borderColor:'rgba(75, 192, 192, 1)',
+        tension:0.3
+      }]
+    }
+  });
+
+  const ctx2 = document.getElementById('salesChart').getContext('2d');
+  const salesChart = new Chart(ctx2, {
+    type:'bar',
+    data:{
+      labels:['Jan','Feb','Mar','Apr','May','Jun'],
+      datasets:[{
+        label:'Sales ($)',
+        data:[500, 800, 1200, 1500, 2000, 2500],
+        backgroundColor:'rgba(54, 162, 235, 0.7)'
+      }]
+    }
+  });
+
+  // Show admin panel if logged in as admin
+  const isAdmin = true; // Simulated; in real app, check authentication
+  if(isAdmin){ document.getElementById('admin-panel').style.display='block'; }
+      </script>
+<!-- PART 8: Messaging, Notifications & Real-Time Updates -->
+<div id="messaging-system" style="padding:2rem; background:#fff8e1;">
+  <h2>Messaging & Notifications</h2>
+
+  <!-- Notifications -->
+  <section id="notifications" style="margin-bottom:2rem;">
+    <h3>Notifications</h3>
+    <ul id="notifications-list" style="list-style:none; padding:0;">
+      <!-- Dynamically populated -->
+    </ul>
+  </section>
+
+  <!-- Messaging -->
+  <section id="messages-section">
+    <h3>Direct Messages</h3>
+    <div style="display:flex; gap:1rem;">
+      <div style="flex:1;">
+        <ul id="contacts-list" style="list-style:none; padding:0; border:1px solid #ccc; height:200px; overflow-y:auto;">
+          <!-- Contacts dynamically added -->
+        </ul>
+      </div>
+      <div style="flex:2; display:flex; flex-direction:column;">
+        <div id="chat-window" style="border:1px solid #ccc; height:200px; overflow-y:auto; padding:0.5rem; background:#f0f0f0;"></div>
+        <input id="chat-input" type="text" placeholder="Type a message..." style="margin-top:0.5rem; padding:0.5rem;" />
+        <button onclick="sendMessage()" style="margin-top:0.5rem;">Send</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // --- Real-time Notifications Simulation ---
+  const notifications = [];
+  const contacts = [
+    {id:1, name:"Alice"},
+    {id:2, name:"Bob"},
+    {id:3, name:"Charlie"}
+  ];
+
+  function addNotification(msg){
+    notifications.push({message:msg, time:new Date()});
+    renderNotifications();
+  }
+
+  function renderNotifications(){
+    const ul = document.getElementById('notifications-list');
+    ul.innerHTML = '';
+    notifications.slice(-5).forEach(n=>{
+      const li = document.createElement('li');
+      li.style.padding='0.5rem';
+      li.style.borderBottom='1px solid #eee';
+      li.textContent = `[${n.time.toLocaleTimeString()}] ${n.message}`;
+      ul.appendChild(li);
+    });
+  }
+
+  // --- Messaging ---
+  const chatHistory = {};
+
+  function renderContacts(){
+    const ul = document.getElementById('contacts-list');
+    ul.innerHTML = '';
+    contacts.forEach(c=>{
+      const li = document.createElement('li');
+      li.textContent = c.name;
+      li.style.cursor = 'pointer';
+      li.style.padding = '0.5rem';
+      li.style.borderBottom = '1px solid #eee';
+      li.onclick = ()=>selectContact(c.id);
+      ul.appendChild(li);
+    });
+  }
+
+  let currentChat = null;
+
+  function selectContact(id){
+    currentChat = id;
+    renderChat();
+  }
+
+  function renderChat(){
+    const chatWindow = document.getElementById('chat-window');
+    chatWindow.innerHTML = '';
+    if(!currentChat) return;
+    const history = chatHistory[currentChat] || [];
+    history.forEach(msg=>{
+      const div = document.createElement('div');
+      div.textContent = `${msg.from}: ${msg.text}`;
+      div.style.marginBottom='0.3rem';
+      chatWindow.appendChild(div);
+    });
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }
+
+  function sendMessage(){
+    const input = document.getElementById('chat-input');
+    if(!currentChat || input.value.trim()==='') return;
+    if(!chatHistory[currentChat]) chatHistory[currentChat]=[];
+    chatHistory[currentChat].push({from:'You', text:input.value});
+    renderChat();
+    addNotification(`Message sent to ${contacts.find(c=>c.id===currentChat).name}`);
+    input.value='';
+  }
+
+  renderContacts();
+
+  // --- Simulate Real-time Updates ---
+  setInterval(()=>{
+    const randContact = contacts[Math.floor(Math.random()*contacts.length)];
+    if(!chatHistory[randContact.id]) chatHistory[randContact.id]=[];
+    chatHistory[randContact.id].push({from:randContact.name, text:"Hello! This is a real-time message."});
+    addNotification(`New message from ${randContact.name}`);
+    if(currentChat === randContact.id) renderChat();
+  }, 10000); // every 10s
+        </script>
+        <!-- PART 9: Payment Integration, Subscriptions, Admin Controls, Final Polishing -->
+<div id="subscription-system" style="padding:2rem; background:#e1f5fe;">
+  <h2>Subscription & Payments</h2>
+
+  <!-- Subscription Plans -->
+  <section id="plans" style="margin-bottom:2rem;">
+    <h3>Choose a Plan</h3>
+    <div style="display:flex; gap:1rem;">
+      <div style="border:1px solid #ccc; padding:1rem; flex:1; text-align:center;">
+        <h4>Basic</h4>
+        <p>$10 / month</p>
+        <button onclick="subscribe('Basic', 10)">Subscribe</button>
+      </div>
+      <div style="border:1px solid #ccc; padding:1rem; flex:1; text-align:center;">
+        <h4>Pro</h4>
+        <p>$30 / month</p>
+        <button onclick="subscribe('Pro', 30)">Subscribe</button>
+      </div>
+      <div style="border:1px solid #ccc; padding:1rem; flex:1; text-align:center;">
+        <h4>Enterprise</h4>
+        <p>$100 / month</p>
+        <button onclick="subscribe('Enterprise', 100)">Subscribe</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment History -->
+  <section id="payment-history">
+    <h3>Payment History</h3>
+    <ul id="payments-list" style="list-style:none; padding:0;"></ul>
+  </section>
+</div>
+
+<!-- Admin Panel -->
+<div id="admin-panel" style="padding:2rem; background:#f3e5f5;">
+  <h2>Admin Controls</h2>
+  <section>
+    <h3>All Users</h3>
+    <ul id="all-users" style="list-style:none; padding:0;"></ul>
+  </section>
+</div>
+
+<script>
+  // --- Subscriptions & Payments ---
+  const subscriptions = [];
+  const users = [
+    {id:1, name:"Alice", role:"creator"},
+    {id:2, name:"Bob", role:"creator"},
+    {id:3, name:"Charlie", role:"client"}
+  ];
+
+  function subscribe(plan, amount){
+    const payment = {
+      user: "You",
+      plan,
+      amount,
+      date: new Date()
+    };
+    subscriptions.push(payment);
+    renderPayments();
+    addNotification(`Subscribed to ${plan} plan for $${amount}`);
+  }
+
+  function renderPayments(){
+    const ul = document.getElementById('payments-list');
+    ul.innerHTML='';
+    subscriptions.slice(-10).forEach(p=>{
+      const li = document.createElement('li');
+      li.textContent = `[${p.date.toLocaleDateString()}] ${p.user} paid $${p.amount} for ${p.plan}`;
+      li.style.borderBottom='1px solid #eee';
+      li.style.padding='0.5rem';
+      ul.appendChild(li);
+    });
+  }
+
+  // --- Admin Panel ---
+  function renderUsers(){
+    const ul = document.getElementById('all-users');
+    ul.innerHTML='';
+    users.forEach(u=>{
+      const li = document.createElement('li');
+      li.textContent = `${u.name} - ${u.role}`;
+      li.style.borderBottom='1px solid #eee';
+      li.style.padding='0.5rem';
+      ul.appendChild(li);
+    });
+  }
+
+  renderUsers();
+
+  // --- Final Polishing ---
+  function initWebForge(){
+    renderContacts();       // Messaging
+    renderNotifications();  // Notifications
+    renderPayments();       // Payment History
+    renderUsers();          // Admin Panel
+    addNotification("WebForge is fully initialized!");
+  }
+
+  window.onload = initWebForge;
+</script>
+
+<style>
+  /* Final Polishing Styles */
+  body{
+    font-family:'Arial', sans-serif;
+    margin:0;
+    padding:0;
+    background:#f9f9f9;
+    color:#333;
+  }
+  h2,h3,h4{
+    margin:0.5rem 0;
+  }
+  button{
+    cursor:pointer;
+    background:#4caf50;
+    color:white;
+    border:none;
+    padding:0.5rem 1rem;
+    border-radius:4px;
+    transition:0.2s;
+  }
+  button:hover{
+    background:#388e3c;
+  }
+</style>
